@@ -82,7 +82,7 @@ Pass credentials and data into the encryption function.  The encrypted data will
 
 
 ```ruby
-require "ubiq-security"
+require 'ubiq-security'
 include Ubiq
 
 encrypted_data = encrypt(credentials, plaintext_data)
@@ -94,7 +94,7 @@ encrypted_data = encrypt(credentials, plaintext_data)
 Pass credentials and encrypted data into the decryption function.  The plaintext data will be returned.
 
 ```ruby
-require "ubiq-security"
+require 'ubiq-security'
 include Ubiq
 
 plaintext_data = decrypt(credentials, encrypted_data)
@@ -111,7 +111,7 @@ plaintext_data = decrypt(credentials, encrypted_data)
 
 
 ```ruby
-require "ubiq-security"
+require 'ubiq-security'
 include Ubiq
 
 # Process 1 MiB of plaintext data at a time
@@ -146,7 +146,7 @@ BLOCK_SIZE = 1024 * 1024
 
 
 ```ruby
-require "ubiq-security"
+require 'ubiq-security'
 include Ubiq
 
 # Process 1 MiB of encrypted data at a time
