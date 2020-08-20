@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
 gem "configparser"
-gem "ubiq-security", :git => "https://gitlab.com/ubiqsecurity/ubiq-python-sample.git"
+gem "ubiq-security"
 
