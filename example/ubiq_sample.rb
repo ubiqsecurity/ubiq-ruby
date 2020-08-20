@@ -1,0 +1,215 @@
+# Copyright 2020 Ubiq Security, Inc., Proprietary and All Rights Reserved.
+#
+# NOTICE:  All information contained herein is, and remains the property
+# of Ubiq Security, Inc. The intellectual and technical concepts contained
+# herein are proprietary to Ubiq Security, Inc. and its suppliers and may be
+# covered by U.S. and Foreign Patents, patents in process, and are
+# protected by trade secret or copyright law. Dissemination of this
+# information or reproduction of this material is strictly forbidden
+# unless prior written permission is obtained from Ubiq Security, Inc.
+#
+# Your use of the software is expressly conditioned upon the terms
+# and conditions available at:
+#
+#     https://ubiqsecurity.com/legal
+
+require 'rb-readline'
+require 'byebug'
+require 'optparse'
+require 'yaml'
+require "active_support/all"
+require 'configparser'
+require 'pathname'
+
+# Sample application for using the Ubiq Platform to encrypt and decrypt data using
+# both the Simple and Piecewise APIs.
+
+require 'ubiq-security'
+include Ubiq
+
+# Build the Arguments hash values
+class ArgumentParser
+  def self.parse(args)
+    options = {}
+
+    opts = OptionParser.new do |opts|
+
+      # Value followed by -c or --credentials flag will contain file name of credentials file
+      opts.on('-c', '--credentials CREDENTIALS', 'The name of the credentials file from where keys will be loaded') do |val|
+        options[:credentials_file] = val
+      end
+
+      # Value followed by -i or --infile flag will contain file name of input file
+      opts.on('-i', '--infile INFILE', 'The input file containing the data to be encrypted/decrypted') do |val|
+        options[:infile] = val
+      end
+
+      # Value followed by -o or --outfile flag will contain file name of output file
+      opts.on('-o', '--outfile OUTFILE', 'The output file containing the result after encryption/decryption') do |val|
+        options[:outfile] = val
+      end
+
+      # -e stands for encryption method
+      opts.on('-e') do |val|
+        options[:method] = 'encrypt'
+      end
+
+      # -d stands for decryption method
+      opts.on('-d') do |val|
+        options[:method] = 'decrypt'
+      end
+
+      # -s stands for simple method
+      opts.on('-s') do |val|
+        options[:mode] = 'simple'
+      end
+
+      # -p stands for piecewise method
+      opts.on('-p') do |val|
+        options[:mode] = 'piecewise'
+      end
+
+      # -P stands for Profile
+      opts.on('-P', '--profile PROFILE', 'identify the profile within the credentials file (default: default)') do |val|
+        options[:profile] = val
+      end
+    end
+
+    opts.parse(args)
+    options
+  end
+
+end
+
+# Set the chunk size ( 1 MB ) for piecewise encrypt/decrypt
+CHUNK_SIZE = 1024 * 1024
+
+def simple_encryption(credentials, infile, outfile)  
+  data = infile.read  
+  
+  begin
+    result = encrypt(
+      credentials,
+      data
+    )
+  rescue Exception => e
+    print e
+  end
+  
+  outfile.write(result)  
+end
+
+def simple_decryption(credentials, infile, outfile)  
+  data = infile.read
+  begin
+    result = decrypt(
+      credentials,
+      data
+    )
+  rescue Exception => e
+    print e
+  end
+  # Open the output file or Create if it does not exists
+  outfile.write(result)
+end
+
+def piecewise_encryption(credentials, infile, outfile)
+  
+  enc = Encryption.new(
+    credentials,
+    1
+  )
+
+  begin
+    outfile.write(enc.begin())
+    # Loop through the file
+    until infile.eof?
+      chunk = infile.read CHUNK_SIZE
+      outfile.write(enc.update(chunk))
+    end
+    outfile.write(enc.end())
+    # Reset the encryption object to initial state and cleanup the memory in use
+    enc.close()
+  rescue Exception => e
+    print e
+    enc.close() if enc
+  end  
+end
+
+def piecewise_decryption(credentials, infile, outfile)
+  dec = Decryption.new(
+    credentials
+  )
+  begin
+    outfile.write(dec.begin())
+    # Loop through the file
+    until infile.eof?
+      chunk = infile.read CHUNK_SIZE
+      outfile.write(dec.update(chunk))
+    end    
+    outfile.write(dec.end())
+    # Reset the decryption object to initial state and cleanup the memory in use
+    dec.close()
+  rescue Exception => e
+    print e
+    dec.close() if dec
+  end
+end
+
+
+def load_credentials(filename)
+  ConfigParser.new(filename)
+end
+
+def load_infile(filename)
+  File.open(filename).size
+end
+
+# Define the max file size, if file size exceeds this, automatically piecewise method will be used
+MAX_SIZE = 50 * 1025 * 1024
+
+options = ArgumentParser.parse(ARGV)
+
+# Raise error if Input file is not found by name given or is not readable
+raise RuntimeError, "Unable to open input file #{options[:infile]} for reading. Check path or access rights." unless (File.exists?(options[:infile]) or File.readable?(options[:infile])) if options[:infile]
+
+# Test if the user has access to the output file
+# Raise error if Output file is present but now writable
+raise RuntimeError, 'Output file is not writable' unless File.writable?(options[:outfile]) if options[:outfile] and File.exists?(options[:outfile])
+
+creds = ConfigCredentials.new(options[:credentials_file], options[:profile]).get_attributes
+
+# Calculate the file size of the input file
+file_size = load_infile(options[:infile])
+
+# If file size exceeds max size, set method to piecewise by default
+if file_size > MAX_SIZE
+  puts "NOTE: This is only for demonstration purposes and is designed to work on memory constrained devices.  Therefore, this sample application will switch to the piecewise APIs for files larger than #{MAX_SIZE} bytes in order to reduce excesive resource usages on resource constrained IoT devices"
+
+  options[:mode] = 'piecewise'
+end
+
+# Open the input and output files once, if validated successfully
+infile = File.open(options[:infile], 'rb')
+outfile = File.open(options[:outfile], 'wb') # Opens or create a new one if does not exists
+
+if options[:method]
+  if options[:method] == 'encrypt'
+    if options[:mode] == 'simple'
+      simple_encryption(creds, infile, outfile)
+    else
+      piecewise_encryption(creds, infile, outfile)
+    end
+
+  elsif options[:method] == 'decrypt'
+        if options[:mode] == 'simple'
+      simple_decryption(creds, infile, outfile)
+    else
+      piecewise_decryption(creds, infile, outfile)
+    end
+  end
+end
+
+infile.close() unless infile.closed?
+outfile.close() unless outfile.closed?
+
