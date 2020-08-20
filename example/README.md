@@ -93,3 +93,4 @@ ruby ubiq_sample.rb -i /tmp/readme.enc -o /tmp/README.out -d -p -c ./credentials
 [rubygems]: https://rubygems.org
 [dashboard]:https://dev.ubiqsecurity.com/docs/dashboard
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
+[apidocs]:https://dev.ubiqsecurity.com/docs/api
