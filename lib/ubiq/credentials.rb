@@ -19,6 +19,8 @@
 require 'configparser'
 require 'rb-readline'
 require 'byebug'
+require_relative './host.rb'
+
 
 module Ubiq
   # Access Credentials used by the library to validate service calls
@@ -74,6 +76,10 @@ module Ubiq
       # get the default profile if there is one
       if config['default'].present?
         d = config['default']
+      end
+
+      if !d.key?('SERVER')
+        d['SERVER'] = Ubiq::UBIQ_HOST
       end
 
       # get the supplied profile if there is one
