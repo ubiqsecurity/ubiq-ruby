@@ -7,7 +7,7 @@ to encrypt and decrypt data
 
 ## Documentation
 
-See the [Ruby API docs](https://ubiqsecurity.com/docs/api?lang=ruby).
+See the [Ruby API docs][apidocs].
 
 
 
@@ -78,8 +78,7 @@ credentials = Credentials(access_key_id = "...", secret_signing_key = "...", sec
 
 ### Encrypt a simple block of data
 
-Pass credentials and data into the encryption function.  The encrypted data
-will be returned.
+Pass credentials and data into the encryption function.  The encrypted data will be returned.
 
 
 ```ruby
@@ -92,8 +91,7 @@ encrypted_data = encrypt(credentials, plaintext_data)
 
 ### Decrypt a simple block of data
 
-Pass credentials and encrypted data into the decryption function.  The plaintext data
-will be returned.
+Pass credentials and encrypted data into the decryption function.  The plaintext data will be returned.
 
 ```ruby
 require "ubiq-security"
@@ -183,6 +181,6 @@ BLOCK_SIZE = 1024 * 1024
 [gem]: https://rubygems.org/gems/uniq-security
 [dashboard]:https://dev.ubiqsecurity.com/docs/dashboard
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
-
+[apidocs]:https://dev.ubiqsecurity.com/docs/api
 
 

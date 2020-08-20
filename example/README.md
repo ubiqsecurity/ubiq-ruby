@@ -7,7 +7,7 @@ the different APIs.
 
 ### Documentation
 
-See the [Python API docs](https://ubiqsecurity.com/docs/api?lang=ruby).
+See the [Ruby API docs][apidocs].
 
 ## Installation
 
@@ -26,7 +26,7 @@ gem install ubiq-security
 
 ## Credentials file
 
-Edit the credentials file with your account credentials created using the Ubiq dashboard
+Edit the credentials file with your account [Credentials][credentials] created using the [Ubiq Dashboard][dashboard].
 
 ```sh
 [default]
@@ -91,3 +91,5 @@ ruby ubiq_sample.rb -i /tmp/readme.enc -o /tmp/README.out -d -p -c ./credentials
 
 [bundler]: https://bundler.io
 [rubygems]: https://rubygems.org
+[dashboard]:https://dev.ubiqsecurity.com/docs/dashboard
+[credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
