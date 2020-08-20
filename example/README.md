@@ -16,7 +16,6 @@ From within the examples directory using [Bundler][bundler]
 ```bash
 cd examples
 bundler install
-ruby ubiq_sample.rb -h
 ```
 To manually install the ubiq-security library
 
