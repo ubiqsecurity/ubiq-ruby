@@ -17,7 +17,7 @@ require 'rb-readline'
 require 'byebug'
 require 'optparse'
 require 'yaml'
-require "active_support/all"
+require 'active_support/all'
 require 'configparser'
 require 'pathname'
 
@@ -25,6 +25,7 @@ require 'pathname'
 # both the Simple and Piecewise APIs.
 
 require 'ubiq-security'
+
 include Ubiq
 
 # Build the Arguments hash values
@@ -33,7 +34,6 @@ class ArgumentParser
     options = {}
 
     opts = OptionParser.new do |opts|
-
       # Value followed by -c or --credentials flag will contain file name of credentials file
       opts.on('-c', '--credentials CREDENTIALS', 'The name of the credentials file from where keys will be loaded') do |val|
         options[:credentials_file] = val
@@ -50,22 +50,22 @@ class ArgumentParser
       end
 
       # -e stands for encryption method
-      opts.on('-e') do |val|
+      opts.on('-e') do |_val|
         options[:method] = 'encrypt'
       end
 
       # -d stands for decryption method
-      opts.on('-d') do |val|
+      opts.on('-d') do |_val|
         options[:method] = 'decrypt'
       end
 
       # -s stands for simple method
-      opts.on('-s') do |val|
+      opts.on('-s') do |_val|
         options[:mode] = 'simple'
       end
 
       # -p stands for piecewise method
-      opts.on('-p') do |val|
+      opts.on('-p') do |_val|
         options[:mode] = 'piecewise'
       end
 
@@ -78,15 +78,14 @@ class ArgumentParser
     opts.parse(args)
     options
   end
-
 end
 
 # Set the chunk size ( 1 MB ) for piecewise encrypt/decrypt
 CHUNK_SIZE = 1024 * 1024
 
-def simple_encryption(credentials, infile, outfile)  
-  data = infile.read  
-  
+def simple_encryption(credentials, infile, outfile)
+  data = infile.read
+
   begin
     result = encrypt(
       credentials,
@@ -95,11 +94,11 @@ def simple_encryption(credentials, infile, outfile)
   rescue Exception => e
     print e
   end
-  
-  outfile.write(result)  
+
+  outfile.write(result)
 end
 
-def simple_decryption(credentials, infile, outfile)  
+def simple_decryption(credentials, infile, outfile)
   data = infile.read
   begin
     result = decrypt(
@@ -114,26 +113,25 @@ def simple_decryption(credentials, infile, outfile)
 end
 
 def piecewise_encryption(credentials, infile, outfile)
-  
   enc = Encryption.new(
     credentials,
     1
   )
 
   begin
-    outfile.write(enc.begin())
+    outfile.write(enc.begin)
     # Loop through the file
     until infile.eof?
       chunk = infile.read CHUNK_SIZE
       outfile.write(enc.update(chunk))
     end
-    outfile.write(enc.end())
+    outfile.write(enc.end)
     # Reset the encryption object to initial state and cleanup the memory in use
-    enc.close()
+    enc.close
   rescue Exception => e
     print e
-    enc.close() if enc
-  end  
+    enc&.close
+  end
 end
 
 def piecewise_decryption(credentials, infile, outfile)
@@ -141,21 +139,20 @@ def piecewise_decryption(credentials, infile, outfile)
     credentials
   )
   begin
-    outfile.write(dec.begin())
+    outfile.write(dec.begin)
     # Loop through the file
     until infile.eof?
       chunk = infile.read CHUNK_SIZE
       outfile.write(dec.update(chunk))
-    end    
-    outfile.write(dec.end())
+    end
+    outfile.write(dec.end)
     # Reset the decryption object to initial state and cleanup the memory in use
-    dec.close()
+    dec.close
   rescue Exception => e
     print e
-    dec.close() if dec
+    dec&.close
   end
 end
-
 
 def load_credentials(filename)
   ConfigParser.new(filename)
@@ -171,11 +168,17 @@ MAX_SIZE = 50 * 1025 * 1024
 options = ArgumentParser.parse(ARGV)
 
 # Raise error if Input file is not found by name given or is not readable
-raise RuntimeError, "Unable to open input file #{options[:infile]} for reading. Check path or access rights." unless (File.exists?(options[:infile]) or File.readable?(options[:infile])) if options[:infile]
+if options[:infile]
+  unless File.exist?(options[:infile]) || File.readable?(options[:infile])
+    raise "Unable to open input file #{options[:infile]} for reading. Check path or access rights."
+  end
+end
 
 # Test if the user has access to the output file
 # Raise error if Output file is present but now writable
-raise RuntimeError, 'Output file is not writable' unless File.writable?(options[:outfile]) if options[:outfile] and File.exists?(options[:outfile])
+if options[:outfile] && File.exist?(options[:outfile])
+  raise 'Output file is not writable' unless File.writable?(options[:outfile])
+end
 
 creds = ConfigCredentials.new(options[:credentials_file], options[:profile]).get_attributes
 
@@ -184,7 +187,9 @@ file_size = load_infile(options[:infile])
 
 # If file size exceeds max size, set method to piecewise by default
 if file_size > MAX_SIZE
-  puts "NOTE: This is only for demonstration purposes and is designed to work on memory constrained devices.  Therefore, this sample application will switch to the piecewise APIs for files larger than #{MAX_SIZE} bytes in order to reduce excesive resource usages on resource constrained IoT devices"
+  puts 'NOTE: This is only for demonstration purposes and is designed to work on memory constrained devices.' \
+    'Therefore, this sample application will switch to the piecewise APIs for files larger ' \
+    'than #{MAX_SIZE} bytes in order to reduce excesive resource usages on resource constrained IoT devices'
 
   options[:mode] = 'piecewise'
 end
@@ -202,7 +207,7 @@ if options[:method]
     end
 
   elsif options[:method] == 'decrypt'
-        if options[:mode] == 'simple'
+    if options[:mode] == 'simple'
       simple_decryption(creds, infile, outfile)
     else
       piecewise_decryption(creds, infile, outfile)
@@ -210,6 +215,5 @@ if options[:method]
   end
 end
 
-infile.close() unless infile.closed?
-outfile.close() unless outfile.closed?
-
+infile.close unless infile.closed?
+outfile.close unless outfile.closed?

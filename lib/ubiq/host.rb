@@ -14,5 +14,5 @@
 #     https://ubiqsecurity.com/legal
 #
 module Ubiq
-   UBIQ_HOST = 'api.ubiqsecurity.com:8811'
+  UBIQ_HOST = 'api.ubiqsecurity.com:8811'
 end
