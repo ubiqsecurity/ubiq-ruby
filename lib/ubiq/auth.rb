@@ -87,9 +87,13 @@ module Ubiq
       return all_headers
     end
 
+    # Only want to return port in the URI if the
+    # host contained one, otherwise let gateway resolve it
     def self.get_host(host)
       uri = URI(host)
-      return "#{uri.hostname}:#{uri.port}"
+      ret = uri.hostname.to_s
+      ret += ":#{uri.port}" if host.match(/:[0-9]+/)
+      ret
     end
 
     def self.get_date
