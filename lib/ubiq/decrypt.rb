@@ -165,7 +165,8 @@ module Ubiq
                 @key['client_id'] = client_id
                 @key['session'] = response['encryption_session']
 
-                @key['algorithm'] = 'aes-256-gcm'
+                # Get the algorithm name from the internal algorithm id in the header
+                @key['algorithm'] = Algo.new.find_alg(algorithm_id)
 
                 encrypted_private_key = response['encrypted_private_key']
                 # Decrypt the encryped private key using SRSA

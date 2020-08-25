@@ -33,10 +33,27 @@ module Ubiq
           key_length: 32,
           iv_length: 12,
           tag_length: 16
+        },
+        'aes-128-gcm' => {
+          id: 1,
+          algorithm: OpenSSL::Cipher::AES128,
+          mode: OpenSSL::Cipher::AES128.new(:GCM),
+          key_length: 16,
+          iv_length: 12,
+          tag_length: 16
         }
       }
     end
 
+    def find_alg(id)
+      set_algo.each do |k,v|
+        if v[:id] == id
+           return k
+         end
+      end
+      "unknown"
+    end
+    
     def get_algo(name)
       set_algo[name]
     end
