@@ -31,6 +31,7 @@ To build and install directly from a clone of the gitlab repository source:
 ```sh
 git clone https://gitlab.com/ubiqsecurity/ubiq-ruby.git
 cd ubiq-ruby
+bundle install
 gem build ubiq-security.gemspec
 gem install ./ubiq-security*.gem
 ```
