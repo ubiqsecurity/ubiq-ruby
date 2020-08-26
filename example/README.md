@@ -11,10 +11,10 @@ See the [Ruby API docs][apidocs].
 
 ## Installation
 
-From within the examples directory using [Bundler][bundler]
+From within the example directory using [Bundler][bundler]
 
 ```bash
-cd examples
+cd example
 bundler install
 ```
 To manually install the ubiq-security library
@@ -38,10 +38,10 @@ SECRET_CRYPTO_ACCESS_KEY = ...
 
 ## View Program Options
 
-From within the examples directory using [Bundler][bundler]
+From within the example directory
 
 ```
-cd examples
+cd example
 ruby ubiq_sample.rb -h
 ```
 <pre>
