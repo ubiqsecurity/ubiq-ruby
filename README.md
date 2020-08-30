@@ -130,7 +130,7 @@ BLOCK_SIZE = 1024 * 1024
    # Loop until the end of the input file is reached
     until infile.eof?
       chunk = infile.read BLOCK_SIZE
-      encrypted_data += encryption.update(chunk))
+      encrypted_data += encryption.update(chunk)
     end
     # Make sure any additional encrypted data is retrieved from encryption instance
     encrypted_data += encryption.end()
@@ -161,7 +161,7 @@ BLOCK_SIZE = 1024 * 1024
     decryption = Decryption(credentials)
 
     # Start the decryption and get any header information
-    plaintext_data = decryption.begin())
+    plaintext_data = decryption.begin()
 
     # Loop until the end of the input file is reached
     until infile.eof?
