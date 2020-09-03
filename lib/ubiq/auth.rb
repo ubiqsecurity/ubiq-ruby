@@ -48,6 +48,7 @@ module Ubiq
 
       # Initialize the headers object to be returned via this method
       all_headers = {}
+      all_headers['user-agent'] = 'ubiq-ruby/' + Ubiq::VERSION
       # The content type of request
       all_headers['content-type'] = 'application/json'
       # The request target calculated above(reqt)
