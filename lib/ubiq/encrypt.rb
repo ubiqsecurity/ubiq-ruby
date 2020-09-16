@@ -128,7 +128,9 @@ module Ubiq
       @enc, @iv = Algo.new.encryptor(@algo, @key['raw'])
 
       # Pack the result into bytes to get a byte string
-      struct = [0, 0, @algo[:id], @iv.length, @key['encrypted'].length].pack('CCCCn')
+      struct = [1, 0, @algo[:id], @iv.length, @key['encrypted'].length].pack('CCCCn')
+        
+      @enc.auth_data = struct
       @encryption_started = true
       return struct + @iv + @key['encrypted']
     end
