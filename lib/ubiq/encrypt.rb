@@ -130,7 +130,7 @@ module Ubiq
       # Pack the result into bytes to get a byte string
       struct = [1, 0, @algo[:id], @iv.length, @key['encrypted'].length].pack('CCCCn')
         
-      @enc.auth_data = struct
+      @enc.auth_data = struct + @iv + @key['encrypted']
       @encryption_started = true
       return struct + @iv + @key['encrypted']
     end

@@ -197,7 +197,7 @@ module Ubiq
               @key['dec'] = Algo.new.decryptor(@algo, @key['raw'], iv)
               @key['uses'] += 1
               if version != 0
-                 @key['dec'].auth_data = packed_struct
+                 @key['dec'].auth_data = packed_struct + iv + encrypted_key
               end
             end
           end
