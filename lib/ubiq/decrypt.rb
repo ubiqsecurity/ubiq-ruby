@@ -123,10 +123,10 @@ module Ubiq
         # and the key?
         if @data.length > struct_length
           # Unpack the values packed in encryption
-          version, flag_for_later, algorithm_id, iv_length, key_length = packed_struct.unpack('CCCCn')
+          version, flags, algorithm_id, iv_length, key_length = packed_struct.unpack('CCCCn')
 
-          # verify flag and version are 0
-          raise 'invalid encryption header' if (version != 0 && version != 1) || (flag_for_later != 0)
+          # verify flag are correct and version is 0
+          raise 'invalid encryption header' if (version != 0 ) || ((flags & ~Algo::UBIQ_AES_AAD_FLAG) != 0)
 
           # Does the buffer contain the entire header?
           if @data.length > struct_length + iv_length + key_length
@@ -196,7 +196,7 @@ module Ubiq
               @algo = Algo.new.get_algo(@key['algorithm'])
               @key['dec'] = Algo.new.decryptor(@algo, @key['raw'], iv)
               @key['uses'] += 1
-              if version != 0
+              if (flags & Algo::UBIQ_AES_AAD_FLAG) != 0
                  @key['dec'].auth_data = packed_struct + iv + encrypted_key
               end
             end
