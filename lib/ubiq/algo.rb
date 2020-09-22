@@ -26,7 +26,7 @@ module Ubiq
 
   class Algo
 
-    UBIQ_AES_AAD_FLAG = 0b00000001
+    UBIQ_HEADER_V0_FLAG_AAD = 0b00000001
 
     def set_algo
       @algorithm = {
