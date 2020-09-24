@@ -123,10 +123,10 @@ module Ubiq
         # and the key?
         if @data.length > struct_length
           # Unpack the values packed in encryption
-          version, flag_for_later, algorithm_id, iv_length, key_length = packed_struct.unpack('CCCCn')
+          version, flags, algorithm_id, iv_length, key_length = packed_struct.unpack('CCCCn')
 
-          # verify flag and version are 0
-          raise 'invalid encryption header' if (version != 0) || (flag_for_later != 0)
+          # verify flag are correct and version is 0
+          raise 'invalid encryption header' if (version != 0 ) || ((flags & ~Algo::UBIQ_HEADER_V0_FLAG_AAD) != 0)
 
           # Does the buffer contain the entire header?
           if @data.length > struct_length + iv_length + key_length
@@ -195,6 +195,15 @@ module Ubiq
             if @key.present?
               @algo = Algo.new.get_algo(@key['algorithm'])
               @key['dec'] = Algo.new.decryptor(@algo, @key['raw'], iv)
+              # Documentation indicates the auth_data has to be set AFTER auth_tag
+              # but we get an OpenSSL error when it is set AFTER an update call.
+              # Checking OpenSSL documentation, there is not a requirement to set
+              # auth_data before auth_tag so Ruby documentation seems to be
+              # wrong.  This approach works and is compatible with the encrypted
+              # data produced by the other languages' client library
+              if (flags & Algo::UBIQ_HEADER_V0_FLAG_AAD) != 0
+                 @key['dec'].auth_data = packed_struct + iv + encrypted_key
+              end
               @key['uses'] += 1
             end
           end

@@ -23,7 +23,11 @@ module Ubiq
   # Class to provide some basic information mapping between an
   # encryption algorithm name and the cooresponding
   # key size, initialization vector length, and tag
+
   class Algo
+
+    UBIQ_HEADER_V0_FLAG_AAD = 0b00000001
+
     def set_algo
       @algorithm = {
         'aes-256-gcm' => {
