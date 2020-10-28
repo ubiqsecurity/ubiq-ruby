@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = "Provide data encryption to any application with a couple of API calls.  " \
                        "See https://www.ubiqsecurity.com for details."
   spec.homepage      = "https://dev.ubiqsecurity.com/docs/ruby-library"
-  spec.license       = "Nonstandard"
+  spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
