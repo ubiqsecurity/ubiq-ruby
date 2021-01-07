@@ -59,7 +59,6 @@ Usage: ubiq_sample [options]
                           The output file containing the result after encryption/decryption
     -c, --credentials CREDENTIALS
                           The name of the credentials file from where keys will be loaded
-    -P, --profile PROFILE
     -P PROFILE, --profile PROFILE
                           Identify the profile within the credentials file (default: default)
 </pre>
