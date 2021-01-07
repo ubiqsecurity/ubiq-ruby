@@ -171,10 +171,10 @@ creds = ConfigCredentials.new(options[:credentials_file], options[:profile]).get
 file_size = load_infile(options[:infile])
 
 # If file size exceeds max size, set method to piecewise by default
-if file_size > MAX_SIZE
+if file_size > MAX_SIZE && options[:mode] != ('piecewise')
   puts 'NOTE: This is only for demonstration purposes and is designed to work on memory constrained devices.' \
     'Therefore, this sample application will switch to the piecewise APIs for files larger ' \
-    'than #{MAX_SIZE} bytes in order to reduce excesive resource usages on resource constrained IoT devices'
+    "than #{MAX_SIZE} bytes in order to reduce excesive resource usages on resource constrained IoT devices"
 
   options[:mode] = 'piecewise'
 end
