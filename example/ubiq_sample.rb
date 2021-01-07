@@ -35,22 +35,22 @@ class ArgumentParser
       end
 
       # -e stands for encryption method
-      opts.on('-e') do |_val|
+      opts.on('-e', 'Encrypt the contents of the input file and write the results to the output file') do |_val|
         options[:method] = 'encrypt'
       end
 
       # -d stands for decryption method
-      opts.on('-d') do |_val|
+      opts.on('-d', 'Decrypt the contents of the input file and write the results to the output file') do |_val|
         options[:method] = 'decrypt'
       end
 
       # -s stands for simple method
-      opts.on('-s') do |_val|
+      opts.on('-s', 'Use the simple encryption / decryption interfaces') do |_val|
         options[:mode] = 'simple'
       end
 
       # -p stands for piecewise method
-      opts.on('-p') do |_val|
+      opts.on('-p', 'Use the piecewise encryption / decryption interfaces') do |_val|
         options[:mode] = 'piecewise'
       end
 
