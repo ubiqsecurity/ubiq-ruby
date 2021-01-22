@@ -19,19 +19,14 @@ class ArgumentParser
     options = {}
 
     opts = OptionParser.new do |opts|
-      # Value followed by -c or --credentials flag will contain file name of credentials file
-      opts.on('-c', '--credentials CREDENTIALS', 'The name of the credentials file from where keys will be loaded') do |val|
-        options[:credentials_file] = val
+      opts.on('-h', '--help', 'Show this help message and exit') do |_val|
+        puts opts.help()
+        exit
       end
 
-      # Value followed by -i or --infile flag will contain file name of input file
-      opts.on('-i', '--infile INFILE', 'The input file containing the data to be encrypted/decrypted') do |val|
-        options[:infile] = val
-      end
-
-      # Value followed by -o or --outfile flag will contain file name of output file
-      opts.on('-o', '--outfile OUTFILE', 'The output file containing the result after encryption/decryption') do |val|
-        options[:outfile] = val
+      opts.on('-V', '--version', 'Show program\'s version number and exit') do |_val|
+        puts 'ubiq-ruby/1.0.0'
+        exit
       end
 
       # -e stands for encryption method
@@ -52,6 +47,21 @@ class ArgumentParser
       # -p stands for piecewise method
       opts.on('-p', 'Use the piecewise encryption / decryption interfaces') do |_val|
         options[:mode] = 'piecewise'
+      end
+
+      # Value followed by -i or --infile flag will contain file name of input file
+      opts.on('-i', '--infile INFILE', 'The input file containing the data to be encrypted/decrypted') do |val|
+        options[:infile] = val
+      end
+
+      # Value followed by -o or --outfile flag will contain file name of output file
+      opts.on('-o', '--outfile OUTFILE', 'The output file containing the result after encryption/decryption') do |val|
+        options[:outfile] = val
+      end
+
+      # Value followed by -c or --credentials flag will contain file name of credentials file
+      opts.on('-c', '--credentials CREDENTIALS', 'The name of the credentials file from where keys will be loaded') do |val|
+        options[:credentials_file] = val
       end
 
       # -P stands for Profile
