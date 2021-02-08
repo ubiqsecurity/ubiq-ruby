@@ -11,11 +11,11 @@ See the [Ruby API docs][apidocs].
 
 ## Installation
 
-From within the example directory using [Bundler][bundler]
+From within the example directory using bundle
 
 ```bash
 cd example
-bundler install
+bundle install
 ```
 To manually install the ubiq-security library
 
@@ -87,7 +87,6 @@ ruby ubiq_sample.rb -i ./README.md -o /tmp/readme.enc -e -p -c ./credentials
 ruby ubiq_sample.rb -i /tmp/readme.enc -o /tmp/README.out -d -p -c ./credentials
 ```
 
-[bundler]: https://bundler.io
 [rubygems]: https://rubygems.org
 [dashboard]:https://dev.ubiqsecurity.com/docs/dashboard
 [credentials]:https://dev.ubiqsecurity.com/docs/how-to-create-api-keys
