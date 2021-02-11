@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'webrick', '~> 1.7'
   spec.add_runtime_dependency 'activesupport', '>= 6.1'
   spec.add_runtime_dependency 'configparser', '>= 0.1'
+  spec.add_runtime_dependency 'tzinfo-data', '>= 1'
 end
