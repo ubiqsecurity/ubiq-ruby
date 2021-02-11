@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
-gem "configparser"
-gem "byebug"
 gem "rb-readline"
-gem "yaml"
 gem "optparse"
 gem "activesupport"
 gem "ubiq-security"
+gem "configparser"
 

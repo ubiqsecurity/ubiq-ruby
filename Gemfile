@@ -7,4 +7,6 @@ gemspec
   gem "rspec", "~> 3.0"
   gem "rb-readline"
   gem "httparty"
+  gem "webrick"
+  gem "activesupport"
 

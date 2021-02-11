@@ -27,4 +27,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.add_runtime_dependency 'rb-readline', '~> 0.2', '>= 0.2'
   spec.add_runtime_dependency 'httparty', '~> 0.15', '>= 0.15'
+  spec.add_runtime_dependency 'webrick', '~> 1.7'
+  spec.add_runtime_dependency 'activesupport', '>= 6.1'
+  spec.add_runtime_dependency 'configparser', '>= 0.1'
+  spec.add_runtime_dependency 'tzinfo-data', '>= 1'
 end
