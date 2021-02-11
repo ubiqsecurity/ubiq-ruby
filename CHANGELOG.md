@@ -1,6 +1,6 @@
 # Changelog
 
-## 
+## 1.0.7 - 2021-02-11
 * Gemfile / dependency cleanup
 
 ## 1.0.6 - 2020-10-28
