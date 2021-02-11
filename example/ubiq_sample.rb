@@ -1,7 +1,5 @@
 require 'rb-readline'
-require 'byebug'
 require 'optparse'
-require 'yaml'
 require 'active_support/all'
 require 'configparser'
 require 'pathname'

@@ -2,7 +2,6 @@
 
 require 'configparser'
 require 'rb-readline'
-require 'byebug'
 require_relative './host.rb'
 
 

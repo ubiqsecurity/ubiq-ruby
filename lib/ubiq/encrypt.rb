@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rb-readline'
-require 'byebug'
 require 'httparty'
 require 'active_support/all'
 require_relative './auth.rb'

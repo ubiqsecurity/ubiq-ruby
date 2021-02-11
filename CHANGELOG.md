@@ -1,5 +1,8 @@
 # Changelog
 
+## 
+* Gemfile / dependency cleanup
+
 ## 1.0.6 - 2020-10-28
 * Change to MIT license
 
