@@ -1,3 +1,48 @@
+# Subject to the foregoing terms and conditions, Ubiq hereby grants to You, at
+# no cost, a perpetual, worldwide, non-exclusive, royalty-free, irrevocable
+# (except as stated herein) license to the Software, including all right to
+# reproduce, prepare derivative works of, sublicense, and distribute the same.
+# In the event You institute any litigation, or otherwise make any claim,
+# against Ubiq for any reason (including a cross-claim or counterclaim in
+# a lawsuit), or violate the terms of this license in any way, this license
+# shall terminate automatically, without notice or liability, as of the date
+# such litigation is filed or such violation occurs.  This license does not
+# grant permission to use Ubiq’s trade names, trademarks, service marks, or
+# product names in any way without Ubiq’s express prior written consent.
+# THE SOFTWARE IS PROVIDED ON AN “AS IS” BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT
+# LIMITATION, ANY WARRANTIES OR CONDITIONS OF TITLE, NON-INFRINGEMENT,
+# MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE. YOU ASSUME ANY
+# AND ALL RISKS ASSOCIATED WITH YOUR EXERCISE OF ANY RIGHTS GRANTED HEREUNDER.
+# UBIQ SHALL HAVE LIABILITY TO YOU OR TO ANY THIRD PARTIES WITH RESPECT TO
+# THIS LICENSE FOR (i) SPECIAL, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, OR
+# PUNITIVE DAMAGES (INCLUDING, BUT NOT LIMITED TO, LOST PROFITS, LOST
+# REVENUES, LOST BUSINESS OPPORTUNITIES, LOSS OF USE OR EQUIPMENT DOWNTIME,
+# AND LOSS OF OR CORRUPTION TO DATA), REGARDLESS OF THE LEGAL THEORY UNDER
+# WHICH THEY ARE SOUGHT (INCLUDING, BUT NOT LIMITED TO ACTIONS FOR BREACH OF
+# CONTRACT, NEGLIGENCE, STRICT LIABILITY, RESCISSION AND BREACH OF WARRANTY),
+# EVEN IF UBIQ HAD BEEN ADVISED OF, OR SHOULD HAVE FORESEEN, THE POSSIBILITY
+# OF SUCH DAMAGES, OR (ii) DIRECT DAMAGES EXCEEDING ONE DOLLAR.  IN NO EVENT
+# SHALL UBIQ BE LIABLE FOR COSTS OF PROCUREMENT OF SUBSTITUTE PRODUCTS.
+# YOU ACKNOWLEDGE AND AGREE THAT ALL LIMITATIONS AND DISCLAIMERS APPLICABLE
+# TO THIS LICENSE ARE ESSENTIAL ELEMENTS OF THIS LICENSE AND THAT THESE
+# REFLECT AN EQUITABLE ALLOCATION OF RISK BETWEEN THE PARTIES AND THAT IN
+# THEIR ABSENCE THE TERMS OF THIS LICENSE WOULD BE SUBSTANTIALLY DIFFERENT.
+
+'''
+  Sample application to provide examples of using the Ubiq Platform Python Client Library
+
+  Sample application for using the Ubiq Platform to encrypt and decrypt data using
+  both the Simple and Piecewise APIs.
+
+@author:     Ubiq Security, Inc
+
+@copyright:  2021- Ubiq Security, Inc. All rights reserved.
+
+@contact:    support@ubiqsecurity.com
+@deffield    updated: Updated
+'''
+
 require 'rb-readline'
 require 'optparse'
 require 'active_support/all'
